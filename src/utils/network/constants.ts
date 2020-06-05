@@ -1,0 +1,7 @@
+export const LOGIN = "login"
+export const GET_USER_DATA = "getUserData"
+export const UPDATE_USER_STEPS = "updateUserSteps"
+export const GET_USER_STEPS = "getUserData"
+export const GET_FRIENDS = "friends"
+export const INVITE_FRIENDS = "inviteFriends"
+export const CREATE_GROUP = "createGroup"
