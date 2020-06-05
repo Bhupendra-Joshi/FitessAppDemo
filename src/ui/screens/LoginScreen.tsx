@@ -25,8 +25,8 @@ const LoginScreen = (props) => {
         isLoading,
         error,
     } = props;
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    const [userName, setUserName] = useState('1111');
+    const [password, setPassword] = useState('1111');
 
     const loginRequest = () => {
         if (userName.trim().length > 0 && password.trim().length > 0) {
