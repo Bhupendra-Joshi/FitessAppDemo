@@ -6,7 +6,7 @@ import {
 } from '../reducers/userReducer';
 
 import fetchRequest from '../../utils/network';
-import { LOGIN, GET_USER_DATA, UPDATE_USER_STEPS } from '../../utils/network/constants';
+import { LOGIN, GET_USER_DATA } from '../../utils/network/constants';
 
 const authenticateUserStart = () => ({
     type: AUTHENTICATE_USER_START,
@@ -58,43 +58,13 @@ export const getUserData = (payload) => dispatch => {
             if (result && result[0]) {
                 dispatch(getUserDataSuccess(result[0]));
             } else {
-                dispatch(getUserDataFailure("User data fetch failed!!"));
+                dispatch(getUserDataFailure(""));
             }
         })
         .catch(error => {
-            dispatch(getUserDataFailure("User data fetch failed!!!!" + error));
+            dispatch(getUserDataFailure(""));
         })
 }
-
-const updateUserStepsStart = () => ({
-    type: AUTHENTICATE_USER_START,
-})
-
-const updateUserStepsSuccess = (data) => ({
-    type: AUTHENTICATE_USER_SUCCESS,
-    data,
-})
-
-const updateUserStepsFailure = (error: string) => ({
-    type: AUTHENTICATE_USER_FAILURE,
-    error
-})
-
-export const updateUserSteps = (payload: any) => dispatch => {
-    dispatch(updateUserStepsStart());
-    fetchRequest(UPDATE_USER_STEPS, { payload })
-        .then(result => {
-            if (result && result[0]) {
-                dispatch(updateUserStepsSuccess(result[0]));
-            } else {
-                dispatch(updateUserStepsFailure("User data fetch failed!!"));
-            }
-        })
-        .catch(error => {
-            dispatch(updateUserStepsFailure("User data fetch failed!!!!" + error));
-        })
-}
-
 
 const logoutUser = () => ({
     type: LOGOUT_USER,

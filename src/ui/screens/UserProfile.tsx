@@ -18,6 +18,11 @@ import StepsRecordItem from '../components/StepsRecordItem';
 import CustomScrollView from '../components/CustomScrollView';
 import FriendListItem from '../components/FriendListItem';
 import CustomTouchableOpacity from '../components/CustomTouchableOpacity';
+import { logout } from '../../store/actions/user';
+import LocalStorage from '../../utils/localStorage';
+import { USER_TOKEN } from '../../utils/localStorage/constants';
+import { Navigation } from 'react-native-navigation';
+import { loginRoot } from '../../navigation';
 
 const width = Dimensions.get('window').width - 100;
 
@@ -50,6 +55,7 @@ const UserProfile = (props) => {
         userData,
         friendData,
         componentId,
+        logout,
     } = props;
 
     const [currentUserData, setCurrentUserData] = useState(friendData || userData);
@@ -68,6 +74,12 @@ const UserProfile = (props) => {
             return total + item.count
         }, 0));
     }, [stepsData]);
+
+    const logoutUser = () => {
+        LocalStorage.removeItem(USER_TOKEN);
+        Navigation.setRoot(loginRoot);
+        logout();
+    }
     return (
         <CustomScrollView style={styles.container}>
             {
@@ -77,9 +89,16 @@ const UserProfile = (props) => {
                     />
                     :
                     <View>
-                        <CustomTouchableOpacity style={styles.pointsContainer}>
-                            <CustomText>Redeem Points : {totalSteps}</CustomText>
-                        </CustomTouchableOpacity>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <CustomTouchableOpacity style={styles.pointsContainer}>
+                                <CustomText>Redeem Points : {totalSteps}</CustomText>
+                            </CustomTouchableOpacity>
+                            <CustomTouchableOpacity
+                                onPress={logoutUser}
+                                style={styles.logoutButton}>
+                                <CustomText>Logout</CustomText>
+                            </CustomTouchableOpacity>
+                        </View>
                         <View style={styles.pieChartContainer}>
                             <PieChart
                                 radius={(width / 2 - 30)}
@@ -143,6 +162,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 20,
     },
+    logoutButton: {
+        backgroundColor: '#ff000033',
+        padding: 10,
+        paddingHorizontal: 20,
+        borderRadius: 20,
+        alignSelf: 'center',
+        marginBottom: 20,
+    },
     pieChartContainer: {
         alignItems: 'center',
     },
@@ -183,7 +210,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    // getUserData,
+    logout
 }
 
 

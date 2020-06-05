@@ -49,12 +49,14 @@ const LoginScreen = (props) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.subContainer}>
                 <CustomTextInput
+                    value={userName}
                     placeholder={"User Email/ RMN"}
                     style={styles.inputBox}
                     onChangeText={userName => setUserName(userName)}
                 />
 
                 <CustomTextInput
+                    value={password}
                     placeholder={"Password"}
                     secureTextEntry={true}
                     style={styles.inputBox}
